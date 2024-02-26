@@ -17,13 +17,14 @@ class Command(BaseCommand):
 
         order = Order(customer=user, is_deleted=False)
         total_price = 0
-        for pk in range(len(product_id)):
+        for pk in product_id:
             product = Product.objects.filter(pk=pk).first()
             if product.quantity > 0:
                 total_price += float(product.price)
                 product.quantity -= 1
                 product.save()
                 order.total_price = total_price
+                order.save()
                 order.products.add(product)
             else:
                 self.stdout.write(f'product {product.name} is out of stock')
