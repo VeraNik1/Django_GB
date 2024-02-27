@@ -29,8 +29,6 @@ class Command(BaseCommand):
                 order.products.add(product)
 
             else:
-                self.stdout.write(f'product {product.name} is out of stock')
+
         if total_price == 0:
             order.remove()
-
-
