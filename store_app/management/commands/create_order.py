@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
+from django.core.serializers import json
 from store_app.models import User, Product, Order
-
+import json
 
 class Command(BaseCommand):
     help = "Create order"
@@ -26,6 +27,8 @@ class Command(BaseCommand):
                 order.total_price = total_price
                 order.save()
                 order.products.add(product)
-            else:
-                self.stdout.write(f'product {product.name} is out of stock')
 
+            else:
+
+        if total_price == 0:
+            order.remove()
