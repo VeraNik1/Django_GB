@@ -53,12 +53,13 @@ def edit_product(request, product_id=None):
     product = get_object_or_404(Product, id=product_id)
     if request.method == 'POST':
 
-        form = ProductEditForm(request.POST, request.FILES)
+        form = ProductEditForm(request.POST, request.FILES, instance=product)
 
         if form.is_valid():
-            form.save()
+            product = form.save(commit=False)
             messages.success(request, 'Данные успешно изменены!')
-            return redirect('index')
+            product.save()
+            return redirect('get_product_view', product_id=product_id)
         else:
             messages.error(request, 'Форма заполнена неверно!')
             return render(request, 'store_app/edit_form.html', context={'form': form})
